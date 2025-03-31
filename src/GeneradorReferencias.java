@@ -18,8 +18,8 @@ public class GeneradorReferencias {
         try {
 
             Imagen img = new Imagen(rutaImagen);
-            int NF = img.alto;
-            int NC = img.ancho;
+            int NF = img.obtenerAlto();
+            int NC = img.obtenerAncho();
 
             int sizeImagen = NF * NC * 3;
             int sizeFiltro = 3 * 3 * 4;
