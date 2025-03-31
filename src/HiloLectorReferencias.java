@@ -47,10 +47,10 @@ public class HiloLectorReferencias extends Thread{
             }
         }
 
-        this.enEjecucion = false;
-
         System.out.println("Hilo lector de referencias ha terminado. Total referencias: "+
                 (hits + fallos)+ ", Hits: "+ hits + ", Fallos: "+ fallos);
+
+        detener();
     }
 
     public void detener(){

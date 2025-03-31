@@ -43,36 +43,45 @@ public class SimuladorMemoria {
 
             long tiempoInicio = System.nanoTime();
 
+            // Crear un monitor para verificar hiloLector
+            Thread monitor = new Thread(() ->{
+                while (hiloLector.isAlive()){
+                    try{
+                        Thread.sleep(100);
+                    } catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+                // Cuando termine se notifica
+                synchronized (lock) {
+                    lock.notifyAll();
+                }
+            });
+
+            // Comenzar los threads
             hiloActualizador.setEnEjecucion(true);
             hiloActualizador.start();
 
             hiloLector.setEnEjecucion(true);
             hiloLector.start();
 
-            //Esperar a que termine el hilo lector
-            while (!hiloLector.getEnEjecucion()){
-                Thread.yield();
-            }
+            //Comenzar el monitor
+            monitor.start();
 
-            // Esperar a que termine el hilo lector
             synchronized (lock){
-                while (hiloLector.isAlive() && hiloLector.getEnEjecucion()){
-                    try{
-                        lock.wait();
-                    } catch (InterruptedException e){
-                        e.printStackTrace();
-                    }
+                try {
+                    lock.wait();
+                } catch (InterruptedException e){
+                    e.printStackTrace();
                 }
             }
 
             hiloActualizador.detener();
 
-            //Esperar a que el hilo actualizador temine
+            //Esperar a que termine el hilo Actualizador
             while (hiloActualizador.isAlive()){
                 Thread.yield();
             }
-
-            hiloLector.detener();
 
             long tiempoFin = System.nanoTime();
 
