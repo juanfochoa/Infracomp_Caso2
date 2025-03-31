@@ -33,4 +33,8 @@ public class HiloActualizadorEstado extends Thread {
     public boolean getEnEjecucion(){
         return enEjecucion;
     }
+
+    public void setEnEjecucion(boolean estado){
+        this.enEjecucion = estado;
+    }
 }

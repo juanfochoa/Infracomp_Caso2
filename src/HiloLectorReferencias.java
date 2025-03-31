@@ -65,4 +65,8 @@ public class HiloLectorReferencias extends Thread{
     public boolean getEnEjecucion(){
         return enEjecucion;
     }
+
+    public void setEnEjecucion(boolean estado){
+        this.enEjecucion = estado;
+    }
 }

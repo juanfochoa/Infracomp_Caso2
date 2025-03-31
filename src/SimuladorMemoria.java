@@ -45,17 +45,21 @@ public class SimuladorMemoria {
             hiloActualizador.start();
             hiloLector.start();
 
+            hiloLector.setEnEjecucion(true);
+
             //Esperar a que termine el hilo lector
             while (!hiloLector.getEnEjecucion()){
                 Thread.yield();
             }
 
             // Detener el hilo actualizador
-            hiloActualizador.detener();
+            hiloLector.detener();
+            hiloActualizador.setEnEjecucion(true);
 
             while(!hiloActualizador.getEnEjecucion()){
                 Thread.yield();
             }
+            hiloActualizador.detener();
 
             long tiempoFin = System.nanoTime();
 
