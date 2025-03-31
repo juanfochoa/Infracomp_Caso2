@@ -13,6 +13,7 @@ public class SimuladorMemoria {
     private HiloActualizadorEstado hiloActualizador;
     private int hits;
     private int fallos;
+    private final Object lock = new Object();
 
     public SimuladorMemoria(int numMarcos, String archivoReferencias){
         this.numMarcos = numMarcos;
@@ -42,24 +43,36 @@ public class SimuladorMemoria {
 
             long tiempoInicio = System.nanoTime();
 
+            hiloActualizador.setEnEjecucion(true);
             hiloActualizador.start();
-            hiloLector.start();
 
             hiloLector.setEnEjecucion(true);
+            hiloLector.start();
 
             //Esperar a que termine el hilo lector
             while (!hiloLector.getEnEjecucion()){
                 Thread.yield();
             }
 
-            // Detener el hilo actualizador
-            hiloLector.detener();
-            hiloActualizador.setEnEjecucion(true);
+            // Esperar a que termine el hilo lector
+            synchronized (lock){
+                while (hiloLector.isAlive() && hiloLector.getEnEjecucion()){
+                    try{
+                        lock.wait();
+                    } catch (InterruptedException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
 
-            while(!hiloActualizador.getEnEjecucion()){
+            hiloActualizador.detener();
+
+            //Esperar a que el hilo actualizador temine
+            while (hiloActualizador.isAlive()){
                 Thread.yield();
             }
-            hiloActualizador.detener();
+
+            hiloLector.detener();
 
             long tiempoFin = System.nanoTime();
 
