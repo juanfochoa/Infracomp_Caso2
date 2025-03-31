@@ -27,17 +27,17 @@ public class FiltroSobel {
      */
     public void applySobel() {
         // Recorrer la imagen aplicando los dos filtros de Sobel
-        for (int i = 1; i < imagenIn.obtenerAlto() - 1; i++) {
-            for (int j = 1; j < imagenIn.obtenerAncho() - 1; j++) {
+        for (int i = 1; i < imagenIn.getAlto() - 1; i++) {
+            for (int j = 1; j < imagenIn.getAncho() - 1; j++) {
                 int gradXRed = 0, gradXGreen = 0, gradXBlue = 0;
                 int gradYRed = 0, gradYGreen = 0, gradYBlue = 0;
                 // Aplicar las máscaras Sobel X y Y
                 for (int ki = -1; ki <= 1; ki++) {
                     for (int kj = -1; kj <= 1; kj++) {
-                        Color color = imagenIn.obtenerDatosImagen().obtenerColor(i+ki, j+kj);
-                        int red = color.obtenerRojo();
-                        int green = color.obtenerVerde();
-                        int blue = color.obtenerAzul();
+                        Color color = imagenIn.getDatosImagen().getColor(i+ki, j+kj);
+                        int red = color.getRojo();
+                        int green = color.getVerde();
+                        int blue = color.getAzul();
 
                         gradXRed += red * SOBEL_X[ki + 1][kj + 1];
                         gradXGreen += green * SOBEL_X[ki + 1][kj + 1];
@@ -58,7 +58,7 @@ public class FiltroSobel {
 
                 // Crear el nuevo valor RGB
                 Color nuevoColor = new Color(red,green,blue);
-                imagenOut.obtenerDatosImagen().establecerColor(i,j,nuevoColor);
+                imagenOut.getDatosImagen().setColor(i,j,nuevoColor);
             }
         }
     }

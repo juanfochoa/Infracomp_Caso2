@@ -18,19 +18,19 @@ public class DatosImagen {
 
     }
 
-    public Color obtenerColor(int fila, int columna){
+    public Color getColor(int fila, int columna){
         return matriz[fila][columna];
     }
 
-    public void establecerColor(int fila, int columna, Color color){
+    public void setColor(int fila, int columna, Color color){
         matriz[fila][columna] = color;
     }
 
-    public int obtenerAncho(){
+    public int getAncho(){
         return ancho;
     }
 
-    public int obtenerAlto(){
+    public int getAlto(){
         return alto;
     }
 }

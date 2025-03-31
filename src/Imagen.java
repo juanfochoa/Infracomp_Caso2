@@ -47,7 +47,7 @@ public class Imagen {
                     // Leer los 3 bytes del píxel (B, G, R)
                     fis.read(pixel);
                     Color color = new Color(pixel[2] & 0xFF, pixel[1] & 0xFF, pixel[0] & 0xFF);
-                    datosImagen.establecerColor(i, j, color);
+                    datosImagen.setColor(i, j, color);
                 }
                 fis.skip(padding);
             }
@@ -74,11 +74,11 @@ public class Imagen {
             for (int i = 0; i < alto; i++) {
                 for (int j = 0; j < ancho; j++) {
                     // Leer los 3 bytes del píxel (B, G, R)
-                    Color color = datosImagen.obtenerColor(i,j);
+                    Color color = datosImagen.getColor(i,j);
                     byte[] pixel = new byte[3];
-                    pixel[0] = (byte) color.obtenerAzul();
-                    pixel[1] = (byte) color.obtenerVerde();
-                    pixel[2] = (byte) color.obtenerRojo();
+                    pixel[0] = (byte) color.getAzul();
+                    pixel[1] = (byte) color.getVerde();
+                    pixel[2] = (byte) color.getRojo();
                     fos.write(pixel);
                 }
                 for (int k = 0; k < padding; k++) {
@@ -91,15 +91,15 @@ public class Imagen {
         }
     }
 
-    public DatosImagen obtenerDatosImagen(){
+    public DatosImagen getDatosImagen(){
         return datosImagen;
     }
 
-    public int obtenerAncho(){
+    public int getAncho(){
         return ancho;
     }
 
-    public int obtenerAlto(){
+    public int getAlto(){
         return alto;
     }
 }

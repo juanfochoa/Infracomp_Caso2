@@ -14,15 +14,15 @@ public class Color {
         this.azul = azul;
     }
 
-    public int obtenerRojo() {
+    public int getRojo() {
         return rojo;
     }
 
-    public int obtenerVerde(){
+    public int getVerde(){
         return verde;
     }
 
-    public int obtenerAzul() {
+    public int getAzul() {
         return azul;
     }
 
