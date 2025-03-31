@@ -61,4 +61,8 @@ public class HiloLectorReferencias extends Thread{
     public int getFallos(){
         return fallos;
     }
+
+    public boolean getEnEjecucion(){
+        return enEjecucion;
+    }
 }
