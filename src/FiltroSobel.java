@@ -1,3 +1,5 @@
+package src;
+
 public class FiltroSobel {
     Imagen imagenIn;
     Imagen imagenOut;

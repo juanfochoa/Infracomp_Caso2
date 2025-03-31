@@ -1,3 +1,5 @@
+package src;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -5,13 +7,14 @@ import java.io.IOException;
 public class Imagen {
     byte[] header = new byte[54];
     byte[][][] imagen;
-    int alto, ancho; // en pixeles
+    int alto;
+    int ancho; // en pixeles
     int padding;
 
 
     /***
      * Método para crear una matriz imagen a partir de un archivo.
-     * @param input: nombre del archivo. El formato debe ser BMP de 24 bits de bit depth
+     * @param nombre: nombre del archivo. El formato debe ser BMP de 24 bits de bit depth
      * @pos la matriz imagen tiene los valores correspondientes a la imagen
      * almacenada en el archivo.
      * */
