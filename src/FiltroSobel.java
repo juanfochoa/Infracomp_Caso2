@@ -27,19 +27,22 @@ public class FiltroSobel {
      */
     public void applySobel() {
         // Recorrer la imagen aplicando los dos filtros de Sobel
-        for (int i = 1; i < imagenIn.alto - 1; i++) {
-            for (int j = 1; j < imagenIn.ancho - 1; j++) {
+        for (int i = 1; i < imagenIn.obtenerAlto() - 1; i++) {
+            for (int j = 1; j < imagenIn.obtenerAncho() - 1; j++) {
                 int gradXRed = 0, gradXGreen = 0, gradXBlue = 0;
                 int gradYRed = 0, gradYGreen = 0, gradYBlue = 0;
                 // Aplicar las máscaras Sobel X y Y
                 for (int ki = -1; ki <= 1; ki++) {
                     for (int kj = -1; kj <= 1; kj++) {
-                        int red = imagenIn.imagen[i+ki][j+kj][0];
-                        int green = imagenIn.imagen[i+ki][j+kj][1];
-                        int blue = imagenIn.imagen[i+ki][j+kj][2];
+                        Color color = imagenIn.obtenerDatosImagen().obtenerColor(i+ki, j+kj);
+                        int red = color.obtenerRojo();
+                        int green = color.obtenerVerde();
+                        int blue = color.obtenerAzul();
+
                         gradXRed += red * SOBEL_X[ki + 1][kj + 1];
                         gradXGreen += green * SOBEL_X[ki + 1][kj + 1];
                         gradXBlue += blue * SOBEL_X[ki + 1][kj + 1];
+
                         gradYRed += red * SOBEL_Y[ki + 1][kj + 1];
                         gradYGreen += green * SOBEL_Y[ki + 1][kj + 1];
                         gradYBlue += blue * SOBEL_Y[ki + 1][kj + 1];
@@ -52,10 +55,10 @@ public class FiltroSobel {
                         gradYGreen* gradYGreen),0),255);
                 int blue = Math.min(Math.max((int) Math.sqrt(gradXBlue * gradXBlue +
                         gradYBlue * gradYBlue),0),255);
+
                 // Crear el nuevo valor RGB
-                imagenOut.imagen[i][j][0] = (byte)red;
-                imagenOut.imagen[i][j][1] = (byte)green;
-                imagenOut.imagen[i][j][2] = (byte)blue;
+                Color nuevoColor = new Color(red,green,blue);
+                imagenOut.obtenerDatosImagen().establecerColor(i,j,nuevoColor);
             }
         }
     }

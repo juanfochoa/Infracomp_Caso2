@@ -26,15 +26,4 @@ public class Color {
         return azul;
     }
 
-    public void establecerRojo(int rojo) {
-        this.rojo = rojo;
-    }
-
-    public void establecerVerde(int verde) {
-        this.verde = verde;
-    }
-
-    public void establecerAzul(int azul) {
-        this.azul = azul;
-    }
 }

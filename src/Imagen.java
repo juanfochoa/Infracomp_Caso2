@@ -6,10 +6,10 @@ import java.io.IOException;
 
 public class Imagen {
     byte[] header = new byte[54];
-    byte[][][] imagen;
-    int alto;
-    int ancho; // en pixeles
-    int padding;
+    private DatosImagen datosImagen;
+    private int alto;
+    private int ancho; // en pixeles
+    private int padding;
 
 
     /***
@@ -32,9 +32,11 @@ public class Imagen {
             alto = ((header[25] & 0xFF) << 24) | ((header[24] & 0xFF) << 16) |
                     ((header[23] & 0xFF) << 8) | (header[22] & 0xFF);
             System.out.println("Ancho: " + ancho + " px, Alto: " + alto + " px");
-            imagen = new byte[alto][ancho][3];
-            int rowSizeSinPadding = ancho * 3;
+
+            datosImagen = new DatosImagen(ancho, alto);
+
             // El tamaño de la fila debe ser múltiplo de 4 bytes
+            int rowSizeSinPadding = ancho * 3;
             padding = (4 - (rowSizeSinPadding % 4)) % 4;
 
             // Leer y modificar los datos de los píxeles
@@ -44,9 +46,8 @@ public class Imagen {
                 for (int j = 0; j < ancho; j++) {
                     // Leer los 3 bytes del píxel (B, G, R)
                     fis.read(pixel);
-                    imagen[i][j][0] = pixel[0];
-                    imagen[i][j][1] = pixel[1];
-                    imagen[i][j][2] = pixel[2];
+                    Color color = new Color(pixel[2] & 0xFF, pixel[1] & 0xFF, pixel[0] & 0xFF);
+                    datosImagen.establecerColor(i, j, color);
                 }
                 fis.skip(padding);
             }
@@ -69,20 +70,36 @@ public class Imagen {
         try {
             FileOutputStream fos = new FileOutputStream(output);
             fos.write(header);
-            byte[] pixel = new byte[3];
+
             for (int i = 0; i < alto; i++) {
                 for (int j = 0; j < ancho; j++) {
                     // Leer los 3 bytes del píxel (B, G, R)
-                    pixel[0] = imagen[i][j][0];
-                    pixel[1] = imagen[i][j][1];
-                    pixel[2] = imagen[i][j][2];
+                    Color color = datosImagen.obtenerColor(i,j);
+                    byte[] pixel = new byte[3];
+                    pixel[0] = (byte) color.obtenerAzul();
+                    pixel[1] = (byte) color.obtenerVerde();
+                    pixel[2] = (byte) color.obtenerRojo();
                     fos.write(pixel);
                 }
-                for (int k = 0; k < padding; k++) fos.write(pad);
+                for (int k = 0; k < padding; k++) {
+                    fos.write(pad);
+                }
             }
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public DatosImagen obtenerDatosImagen(){
+        return datosImagen;
+    }
+
+    public int obtenerAncho(){
+        return ancho;
+    }
+
+    public int obtenerAlto(){
+        return alto;
     }
 }
