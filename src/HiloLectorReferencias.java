@@ -8,7 +8,7 @@ public class HiloLectorReferencias extends Thread{
     private int hits;
     private int fallos;
     private boolean enEjecucion;
-    private static final int REFERENCIAS_POR_LOTE = 1000;
+    private static final int REFERENCIAS_POR_LOTE = 10000;
 
     public HiloLectorReferencias(List<Referencia> listaReferencias, TablaPaginas tablaPaginas){
         this.listaReferencias = listaReferencias;
@@ -40,7 +40,7 @@ public class HiloLectorReferencias extends Thread{
 
             if (contador % REFERENCIAS_POR_LOTE == 0){
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

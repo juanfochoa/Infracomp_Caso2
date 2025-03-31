@@ -14,11 +14,10 @@ public class SimuladorMemoriaVirtual {
 
             switch (opcion) {
                 case "1":
-                    opcionGeneracionReferencias();
+                    opcionGeneracionReferencias(sc);
                     break;
                 case "2":
-                    // Aquí se llamaría a la funcionalidad de la opción 2 (simulación de memoria)
-                    System.out.println("Opción 2 seleccionada (Funcionalidad en desarrollo).");
+                    opcionSimulacionMemoria(sc);
                     break;
                 case "0":
                     System.out.println("Saliendo del programa...");
@@ -48,9 +47,7 @@ public class SimuladorMemoriaVirtual {
      * Solicita el tamaño de página y el nombre del archivo de imagen (sin la ruta),
      * construye la ruta relativa y llama a la generación de referencias.
      */
-    private static void opcionGeneracionReferencias() {
-        Scanner sc = new Scanner(System.in);
-
+    private static void opcionGeneracionReferencias(Scanner sc) {
         try {
             // Solicitar parámetros para la opción 1
             System.out.print("Ingrese el tamaño de página (en bytes): ");
@@ -71,6 +68,31 @@ public class SimuladorMemoriaVirtual {
             System.out.println("Error: El tamaño de página debe ser un número entero.");
         } catch (Exception e) {
             System.out.println("Ocurrió un error durante la generación de referencias: " + e.getMessage());
+        }
+    }
+
+    /**
+            * Funcionalidad para la Opción 2: Simulación de Memoria.
+            * Solicita el número de marcos de página y el nombre del archivo de referencia (sin la ruta),
+     */
+    private static void opcionSimulacionMemoria(Scanner sc){
+        try{
+            // Solicitar parámetros para la opción 2
+            System.out.print("Ingrese el número de marcos de página: ");
+            int numMarcos = Integer.parseInt(sc.nextLine().trim());
+
+            System.out.print("Ingrese el nombre del archivo de referencias: ");
+            String archivoReferencias = sc.nextLine().trim();
+
+            // Crear instancia del simulador de memoria y ejecutar la simulación
+            SimuladorMemoria simulador = new SimuladorMemoria(numMarcos, archivoReferencias);
+            simulador.simular();
+
+        } catch (NumberFormatException e){
+            System.out.println("Error: El número de marcos debe ser un número entero.");
+        } catch (Exception e){
+            System.out.println("Ocurrió un error durante la simulación: "+ e.getMessage());
+            e.printStackTrace();
         }
     }
 }

@@ -17,7 +17,7 @@ public class HiloActualizadorEstado extends Thread {
             tablaPaginas.actualizarEstadoPaginas();
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
