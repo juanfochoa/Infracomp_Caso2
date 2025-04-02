@@ -104,6 +104,8 @@ public class SimuladorMemoria {
             System.out.println("Fallos de página: " + fallos + " (" + (fallos * 100.0 / (hits + fallos)) + "%)");
             System.out.println("\n===== Tiempos =====");
             System.out.println("Tiempo real simulación: " + tiempoReal + " ms");
+            System.out.println("Tiempo solo hits: " + tiempoSoloHits + " ms");
+            System.out.println("Tiempo solo fallos: " + tiempoSoloFallos + " ms");
             System.out.println("Tiempo teórico (hits + fallos): " + tiempoTeorico + " ms");
             System.out.println("Tiempo si todo estuviera en RAM: " + tiempoTodoRam + " ms");
             System.out.println("Tiempo si nada estuviera en RAM: " + tiempoNadaRam + " ms");
